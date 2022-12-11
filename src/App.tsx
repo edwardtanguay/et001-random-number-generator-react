@@ -7,14 +7,24 @@ function App() {
 	const [availableNames, setAvailableNames] = useState(_originalNames);
 	const [selectedNames, setSelectedNames] = useState([]);
 	const [currentName, setCurrentName] = useState('');
-	
+
 	return (
 		<div className="App">
 			<h1>Random Name Selector (React)</h1>
-			<div className="availableArea"></div>
+			<div className="availableArea">
+				{availableNames.map((availableName, index) => {
+					return (
+						<div className="availableName" key={index}>
+							{availableName}
+						</div>
+					);
+				})}
+			</div>
 			<div className="currentArea">
 				<button className="buttonSelect">Select</button>
-				<div className="currentName"></div>
+				{currentName && (
+					<div className="currentName">{currentName}</div>
+				)}
 			</div>
 			<div className="selectedNames"></div>
 		</div>
