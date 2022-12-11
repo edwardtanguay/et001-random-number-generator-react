@@ -10,42 +10,39 @@ function App() {
 	const [availableNames, setAvailableNames] = useState(_originalNames);
 	const [currentName, setCurrentName] = useState('');
 	const [selectedNames, setSelectedNames] = useState<string[]>([]);
-	const [currentPhase, setCurrentPhase] = useState(
-		Phase.waitingForFirstClick
-	);
+	const [currentPhase, setCurrentPhase] = useState(Phase.nobodySelectedYet);
 
 	const getPhaseObject = () => {
 		return phaseLookup[Phase[Phase[currentPhase]]];
 	};
 
-	const handleMainButton = () => {
+	const moveCurrentNameToSelectedNames = () => {
 		if (currentName !== '') {
 			selectedNames.push(currentName);
 		}
-		const _currentName = tools.removeRandomItemFromArray(availableNames);
-		setAvailableNames([...availableNames]);
-		setCurrentName(_currentName === null ? '' : _currentName);
-		if (currentPhase === Phase.waitingForFirstClick) {
-			setCurrentPhase(Phase.selectingNames);
-		}
 	};
 
-	useEffect(() => {
-		if (availableNames.length === 0) {
-			setCurrentPhase(Phase.onlyOnePersonLeft);
-		}
-	}, [availableNames]);
+	const moveRandomAvailableNameToCurrentName = () => {
+		return tools.removeRandomItemFromArray(availableNames);
+	};
 
-	useEffect(() => {
-		if (currentName !== '' && selectedNames.length === 0) {
-			setAvailableNames(_originalNames);
-			setSelectedNames([]);
-			setCurrentPhase(Phase.waitingForFirstClick);
+	const handleMainButton = () => {
+		if (currentPhase === Phase.nobodySelectedYet) {
+			moveCurrentNameToSelectedNames();
+			let _currentName  = moveRandomAvailableNameToCurrentName();
+			_currentName = _currentName === null ? '' : _currentName;
+
+			setAvailableNames([...availableNames]);
+			setCurrentName(_currentName);
+			setSelectedNames([...selectedNames]);
+
+			if (availableNames.length > 0) {
+				setCurrentPhase(Phase.selectingNames);
+			} else {
+				setCurrentPhase(Phase.onlyOnePersonLeft);
+			}
 		}
-		if (availableNames.length === 0 && currentName === '') {
-			setCurrentPhase(Phase.finished);
-		}
-	}, [currentName]);
+	};
 
 	return (
 		<div className="App">

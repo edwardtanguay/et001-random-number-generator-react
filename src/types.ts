@@ -1,6 +1,8 @@
 export enum Phase {
-	waitingForFirstClick = 'waitingForFirstClick',
+	nobodySelectedYet = 'nobodySelectedYet',
 	selectingNames = 'selectingNames',
 	onlyOnePersonLeft = 'onlyOnePersonLeft',
 	finished = 'finished'
 }
+
+export type Nullable<T> = T | null;

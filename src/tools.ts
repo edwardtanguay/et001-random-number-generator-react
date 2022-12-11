@@ -1,3 +1,5 @@
+type Nullable<T> = T | null;
+
 /**
  * removes a random item from an array and returns that item
  * 
@@ -7,7 +9,7 @@
  * color is 'red'
  * colors is ['blue', 'green']
  */
-export const removeRandomItemFromArray = (arr: any[]) => {
+export const removeRandomItemFromArray = <T>(arr: T[]): T | null => {
 	if (arr.length === 0) {
 		return null;
 	}
