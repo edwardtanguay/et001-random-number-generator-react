@@ -7,7 +7,7 @@ import phaseLookup from './data/phaseLookup.json';
 const _originalNames = ['Marco', 'Luka', 'Jonas', 'Lena', 'Emma', 'Leah'];
 
 function App() {
-	const [availableNames, setAvailableNames] = useState(_originalNames);
+	const [availableNames, setAvailableNames] = useState([..._originalNames]);
 	const [currentName, setCurrentName] = useState('');
 	const [selectedNames, setSelectedNames] = useState<string[]>([]);
 	const [currentPhase, setCurrentPhase] = useState(Phase.nobodySelectedYet);
