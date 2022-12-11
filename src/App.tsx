@@ -27,7 +27,7 @@ function App() {
 	};
 
 	const handleMainButton = () => {
-		if (currentPhase === Phase.nobodySelectedYet) {
+		if (currentPhase === Phase.nobodySelectedYet || currentPhase === Phase.selectingNames) {
 			moveCurrentNameToSelectedNames();
 			let _currentName  = moveRandomAvailableNameToCurrentName();
 			_currentName = _currentName === null ? '' : _currentName;
@@ -42,6 +42,11 @@ function App() {
 				setCurrentPhase(Phase.onlyOnePersonLeft);
 			}
 		}
+		if (currentPhase === Phase.onlyOnePersonLeft) {
+			moveCurrentNameToSelectedNames();
+			setCurrentPhase(Phase.finished);
+		}
+		
 	};
 
 	return (
