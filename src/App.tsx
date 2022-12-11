@@ -32,6 +32,9 @@ function App() {
 		const _currentName = tools.removeRandomItemFromArray(availableNames);
 		setAvailableNames([...availableNames]);
 		setCurrentName(_currentName === null ? '' : _currentName);
+		if (currentPhase === 'haventClickedYet') {
+			setCurrentPhase('selectingNames');
+		}
 	};
 
 	useEffect(() => {
@@ -53,6 +56,7 @@ function App() {
 
 	return (
 		<div className="App">
+			<div>{currentPhase}</div>
 			<h1>Random Name Selector (React)</h1>
 			<div className="availableArea">
 				{availableNames.map((availableName, index) => {
