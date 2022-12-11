@@ -4,5 +4,3 @@ export enum Phase {
 	onlyOnePersonLeft = 'onlyOnePersonLeft',
 	finished = 'finished'
 }
-
-export type Nullable<T> = T | null;

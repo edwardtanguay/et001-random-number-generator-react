@@ -1,5 +1,3 @@
-type Nullable<T> = T | null;
-
 /**
  * removes a random item from an array and returns that item
  * 
