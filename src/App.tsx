@@ -20,6 +20,9 @@ function App() {
 		if (currentName !== '') {
 			selectedNames.push(currentName);
 		}
+		let _currentName = moveRandomAvailableNameToCurrentName();
+		_currentName = _currentName === null ? '' : _currentName;
+		setCurrentName(_currentName);
 	};
 
 	const moveRandomAvailableNameToCurrentName = () => {
@@ -27,13 +30,12 @@ function App() {
 	};
 
 	const handleMainButton = () => {
-		if (currentPhase === Phase.nobodySelectedYet || currentPhase === Phase.selectingNames) {
+		if (
+			currentPhase === Phase.nobodySelectedYet ||
+			currentPhase === Phase.selectingNames
+		) {
 			moveCurrentNameToSelectedNames();
-			let _currentName  = moveRandomAvailableNameToCurrentName();
-			_currentName = _currentName === null ? '' : _currentName;
-
 			setAvailableNames([...availableNames]);
-			setCurrentName(_currentName);
 			setSelectedNames([...selectedNames]);
 
 			if (availableNames.length > 0) {
@@ -42,11 +44,18 @@ function App() {
 				setCurrentPhase(Phase.onlyOnePersonLeft);
 			}
 		}
+
 		if (currentPhase === Phase.onlyOnePersonLeft) {
 			moveCurrentNameToSelectedNames();
 			setCurrentPhase(Phase.finished);
 		}
-		
+
+		if (currentPhase === Phase.finished) {
+			setAvailableNames([..._originalNames]);
+			setSelectedNames([]);
+			setCurrentName('');
+			setCurrentPhase(Phase.nobodySelectedYet);
+		}
 	};
 
 	return (
