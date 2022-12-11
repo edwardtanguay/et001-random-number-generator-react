@@ -1,0 +1,14 @@
+{
+  "waitingForFirstClick": {
+    "buttonName": "Select"
+  },
+  "selectingNames": {
+    "buttonName": "Select"
+  },
+  "onlyOnePersonLeft": {
+    "buttonName": "Finish"
+  },
+  "finished": {
+    "buttonName": "RESET"
+  }
+}

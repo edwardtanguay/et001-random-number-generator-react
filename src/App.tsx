@@ -1,29 +1,22 @@
 import { useState, useEffect } from 'react';
 import * as tools from './tools';
 import './App.scss';
+import { Phase } from './types';
+import phaseLookup from './data/phaseLookup.json';
 
 const _originalNames = ['Marco', 'Luka', 'Jonas', 'Lena', 'Emma', 'Leah'];
-
-const phases: any = {
-	haventClickedYet: {
-		buttonName: 'Select'
-	},
-	selectingNames: {
-		buttonName: 'Select'	
-	},
-	onlyOnePersonLeft: {
-		buttonName: 'Finish'
-	},
-	finished: {
-		buttonName: 'RESET'
-	}
-}
 
 function App() {
 	const [availableNames, setAvailableNames] = useState(_originalNames);
 	const [currentName, setCurrentName] = useState('');
 	const [selectedNames, setSelectedNames] = useState<string[]>([]);
-	const [currentPhase, setCurrentPhase] = useState('haventClickedYet');
+	const [currentPhase, setCurrentPhase] = useState(
+		Phase.waitingForFirstClick
+	);
+
+	const getPhaseObject = () => {
+		return phaseLookup[Phase[Phase[currentPhase]]];
+	};
 
 	const handleMainButton = () => {
 		if (currentName !== '') {
@@ -32,25 +25,25 @@ function App() {
 		const _currentName = tools.removeRandomItemFromArray(availableNames);
 		setAvailableNames([...availableNames]);
 		setCurrentName(_currentName === null ? '' : _currentName);
-		if (currentPhase === 'haventClickedYet') {
-			setCurrentPhase('selectingNames');
+		if (currentPhase === Phase.waitingForFirstClick) {
+			setCurrentPhase(Phase.selectingNames);
 		}
 	};
 
 	useEffect(() => {
 		if (availableNames.length === 0) {
-			setCurrentPhase('onlyOnePersonLeft');
+			setCurrentPhase(Phase.onlyOnePersonLeft);
 		}
-	}, [availableNames])
+	}, [availableNames]);
 
 	useEffect(() => {
 		if (currentName !== '' && selectedNames.length === 0) {
 			setAvailableNames(_originalNames);
 			setSelectedNames([]);
-			setCurrentPhase('haventClickedYet');
+			setCurrentPhase(Phase.waitingForFirstClick);
 		}
 		if (availableNames.length === 0 && currentName === '') {
-			setCurrentPhase('finished')
+			setCurrentPhase(Phase.finished);
 		}
 	}, [currentName]);
 
@@ -68,7 +61,9 @@ function App() {
 				})}
 			</div>
 			<div className="currentArea">
-				<button className="buttonSelect" onClick={handleMainButton}>{phases[currentPhase].buttonName}</button>
+				<button className="buttonSelect" onClick={handleMainButton}>
+					{getPhaseObject().buttonName}
+				</button>
 				{currentName && (
 					<div className="currentName">{currentName}</div>
 				)}
