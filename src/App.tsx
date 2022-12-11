@@ -5,8 +5,8 @@ const _originalNames = ['Marco', 'Luka', 'Jonas', 'Lena', 'Emma', 'Leah'];
 
 function App() {
 	const [availableNames, setAvailableNames] = useState(_originalNames);
-	const [selectedNames, setSelectedNames] = useState([]);
 	const [currentName, setCurrentName] = useState('');
+	const [selectedNames, setSelectedNames] = useState([]);
 
 	return (
 		<div className="App">
@@ -26,7 +26,15 @@ function App() {
 					<div className="currentName">{currentName}</div>
 				)}
 			</div>
-			<div className="selectedNames"></div>
+			<div className="selectedArea">
+				{selectedNames.map((selectedName, index) => {
+					return (
+						<div className="selectedName" key={index}>
+							{selectedName}
+						</div>
+					);
+				})}
+			</div>
 		</div>
 	);
 }
