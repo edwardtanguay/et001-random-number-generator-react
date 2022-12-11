@@ -60,7 +60,6 @@ function App() {
 
 	return (
 		<div className="App">
-			<div>{currentPhase}</div>
 			<h1>Random Name Selector (React/TypeScript)</h1>
 			<div className="availableArea">
 				{availableNames.map((availableName, index) => {
